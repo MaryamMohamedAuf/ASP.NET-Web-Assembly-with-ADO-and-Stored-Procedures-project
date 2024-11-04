@@ -1,0 +1,53 @@
+﻿@page "/update-user/{UserId:int}"
+@inject SOFCOproject.Client.Services.UserService UserService;
+@inject NavigationManager NavigationManager;
+
+@using SOFCOproject.Shared.Models;
+@using Microsoft.AspNetCore.Components;
+@code {
+    [Parameter] public int UserId { get; set; }
+    private User user = new User();
+    private bool isLoading = true;
+    private bool isUpdated = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetUserById(UserId);
+        isLoading = false;
+    }
+
+    private async Task UpdateUsers()
+    {
+        isUpdated = false;
+        await UserService.UpdateUser(user);
+        isUpdated = true;
+        NavigationManager.NavigateTo("/UsersList");
+
+    }
+}
+
+<h3>Update User</h3>
+
+@if (isLoading)
+{
+    <p>Loading user data...</p>
+}
+else
+{
+    <EditForm Model="user" OnValidSubmit="UpdateUsers">
+        <div>
+            <label for="name">Name:</label>
+            <InputText id="name" @bind-Value="user.Name" />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <InputText id="email" @bind-Value="user.Email" />
+        </div>
+        <button type="submit">Save Changes</button>
+    </EditForm>
+
+    @if (isUpdated)
+    {
+        <p>User updated successfully!</p>
+    }
+}

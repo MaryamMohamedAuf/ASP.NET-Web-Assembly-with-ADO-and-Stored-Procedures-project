@@ -1,0 +1,33 @@
+﻿@page "/UserForm"
+@inject SOFCOproject.Client.Services.UserService UserService;
+@using SOFCOproject.Shared.Models;
+@inject NavigationManager NavigationManager;
+
+
+<h3>Create User</h3>
+
+<EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Name:</label>
+        <InputText @bind-Value="user.Name" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="user.Email" />
+    </div>
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private User user = new User();
+
+    private async Task HandleValidSubmit()
+    {
+        await UserService.CreateUser(user);
+        NavigationManager.NavigateTo("/UsersList");
+
+    }
+}

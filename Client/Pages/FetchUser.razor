@@ -1,0 +1,29 @@
+﻿@page "/user/{id:int}"
+@inject SOFCOproject.Client.Services.UserService UserService;
+@inject HttpClient Http;
+@using SOFCOproject.Shared.Models;
+
+<h3>Fetch User</h3>
+
+@if (user == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>User ID: @user.Id</p>
+    <p>Name: @user.Name</p>
+    <p>Email: @user.Email</p>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private SOFCOproject.Shared.Models.User user;
+
+    protected override async Task OnInitializedAsync()
+    {
+       user = await UserService.GetUserById(Id);
+    }
+}

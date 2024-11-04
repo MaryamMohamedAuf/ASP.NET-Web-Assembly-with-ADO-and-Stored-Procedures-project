@@ -1,0 +1,42 @@
+﻿@page "/UsersList"
+@inject SOFCOproject.Client.Services.UserService UserService;
+@using SOFCOproject.Shared.Models;
+@inject NavigationManager NavigationManager
+
+
+<h3>Users</h3>
+
+<ul>
+    @if (users != null)
+   {
+            foreach (var user in users)
+        {
+        
+            <li>
+                @user.Name - @user.Email
+            <button @onclick="() => DeleteUser(user.Id)">Delete</button>
+            <NavLink href="@($"/update-user/{user.Id}")">Edit</NavLink>
+            </li>
+        }
+   }
+        else
+        {
+            <P> no users found </P>
+        }
+    
+</ul>
+
+@code {
+    private List<User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetUsers();
+    }
+
+    private async Task DeleteUser(int id)
+    {
+        await UserService.DeleteUser(id);
+        users = await UserService.GetUsers(); // Refresh the user list
+    }
+}

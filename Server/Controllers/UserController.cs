@@ -27,7 +27,7 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUserById(int id)
     {
-        var user = await _userService.GetUserById(id);
+        var user = await _userService.GetUserByIdAsync(id);
         if (user == null)
         {
             return NotFound();
@@ -41,7 +41,7 @@ public class UserController : ControllerBase
         {
             return BadRequest("User name and email are required.");
         }
-        await _userService.SaveUser(user);
+        await _userService.SaveUserAsync(user);
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
     }
 
@@ -53,7 +53,7 @@ public class UserController : ControllerBase
         {
             return BadRequest("User ID mismatch.");
         }
-        bool isUpdated = await _userService.UpdateUser(user);
+        bool isUpdated = await _userService.UpdateUserAsync(user);
         if (!isUpdated)
         {
             return NotFound("User not found or no changes were made.");
@@ -65,7 +65,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUser(int id)
     {
-        bool isDeleted = await _userService.DeleteUser(id);
+        bool isDeleted = await _userService.DeleteUserAsync(id);
         if (!isDeleted)
         {
             return NotFound("User not found.");

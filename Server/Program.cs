@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using SOFCOproject.Server.Services;
+using SOFCOproject.Server.Interface;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<Iuser, UserRepo>();
 
 var app = builder.Build();
 

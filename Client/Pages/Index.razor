@@ -1,9 +1,18 @@
 ﻿@page "/"
 
+@inject NavigationManager NavigationManager
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- Page container with card layout -->
+<RadzenCard Style="padding: 30px; margin: 20px; background-color: #f5f5f5; border-radius: 8px;">
+    <RadzenHeading Size="H1" Style="color: #4a90e2; text-align: center; margin-bottom: 20px;">
+        Hello, world!
+    </RadzenHeading>
 
-Welcome to your new app.
+    <p style="font-size: 1.2em; text-align: center; color: #000000;">
+        Welcome
+    </p>
+    
+</RadzenCard>
 
-<SurveyPrompt Title="How is Blazor working for you?" />

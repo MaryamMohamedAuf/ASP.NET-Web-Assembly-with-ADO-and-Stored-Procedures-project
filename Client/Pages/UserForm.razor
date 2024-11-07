@@ -11,14 +11,15 @@
     <ValidationSummary />
 
     <div>
-        <label>Name:</label>
-        <InputText @bind-Value="user.Name" />
+        <label>Name</label>
+        <RadzenTextBox @bind-Value="@user.Name" Style="width: 50%;" />
     </div>
-    <div>
-        <label>Email:</label>
-        <InputText @bind-Value="user.Email" />
+
+    <div style="margin-bottom: 10px;">
+        <label>Email</label>
+        <RadzenTextBox @bind-Value="@user.Email" Style="width: 50%;" />
     </div>
-    <button type="submit">Create</button>
+    <RadzenButton type="submit">Create</RadzenButton>
 </EditForm>
 
 @code {
